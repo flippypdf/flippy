@@ -332,6 +332,32 @@
     @media (prefers-reduced-motion: reduce) {
       .fade-in { opacity: 1; transform: none; }
     }
+    .platform-card form { display: flex; gap: 8px; }
+.platform-card input[type="email"] {
+  flex: 1;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: var(--text);
+  font-size: 14px;
+  outline: none;
+}
+.platform-card input[type="email"]:focus { border-color: var(--accent); }
+.platform-card input[type="email"]::placeholder { color: var(--text-muted); }
+.platform-card button {
+  background: var(--accent);
+  color: #000;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+.platform-card button:hover { background: var(--accent-hover); }
   </style>
 </head>
 <body>
