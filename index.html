@@ -514,7 +514,7 @@
       <div class="footer-left">&copy; 2026 Flippy. All rights reserved.</div>
       <div class="footer-links">
         <a href="https://x.com/vibe_overflow" target="_blank" rel="noopener">@vibe_overflow</a>
-        <a href="https://trisonb.github.io/flippy-privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a>
+        <a href="https://flippypdf.github.io/privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a>
         <a href="mailto:flippypdf@gmail.com">Contact</a>
       </div>
     </div>
@@ -538,25 +538,6 @@
       }, { threshold: 0.15 });
       els.forEach(function(el) { observer.observe(el); });
     })();
-
-    // Form submission via fetch (stay on page)
-    document.querySelectorAll('form').forEach(function(form) {
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        var data = new FormData(form);
-        fetch(form.action, {
-          method: 'POST',
-          body: data,
-          headers: { 'Accept': 'application/json' }
-        }).then(function(res) {
-          if (res.ok) {
-            form.style.display = 'none';
-            var success = form.parentElement.querySelector('.form-success');
-            if (success) success.style.display = 'block';
-          }
-        }).catch(function() {});
-      });
-    });
   </script>
 
 </body>
