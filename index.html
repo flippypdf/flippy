@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Flippy - The PDF Reader That Doesn't Suck</title>
   <meta name="description" content="Reading PDFs on your phone is awful. Flippy fixes it. Zoom that stays locked, paste any link to download instantly, pages that flip like a real book, and your PDFs read aloud.">
+
+  <meta property="og:title" content="Flippy - The PDF Reader That Doesn't Suck">
+  <meta property="og:description" content="Reading PDFs on your phone is awful. Flippy fixes it. Zoom that stays locked, paste any link to download instantly, pages that flip like a real book, and your PDFs read aloud.">
+  <meta property="og:image" content="https://flippypdf.github.io/flippy/assets/mockup-tablet.png">
+  <meta property="og:url" content="https://flippypdf.github.io/flippy/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Flippy - The PDF Reader That Doesn't Suck">
+  <meta name="twitter:description" content="Reading PDFs on your phone is awful. Flippy fixes it.">
+  <meta name="twitter:image" content="https://flippypdf.github.io/flippy/assets/mockup-tablet.png">
+
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
@@ -248,6 +259,52 @@
       margin-bottom: 48px;
     }
 
+    /* Recently added */
+    .recent-section {
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    .recent-section .section-title { margin-bottom: 12px; }
+    .recent-subtitle {
+      color: var(--text-secondary);
+      font-size: 15px;
+      margin-bottom: 48px;
+    }
+    .recent-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      text-align: left;
+    }
+    .recent-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .recent-card .recent-icon { font-size: 28px; margin-bottom: 12px; }
+    .recent-card h3 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .recent-card p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .platform-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 12px;
+      background: #1a3a1a;
+      color: #4ade80;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+
     /* Demo video */
     .demo-section { text-align: center; }
     .demo-video {
@@ -418,7 +475,7 @@
   <section class="hero">
     <div class="container">
       <h1>Reading PDFs on your phone<br>is awful. I fixed it.</h1>
-      <p class="subtitle">Zoom that actually stays locked. Paste any link to download a PDF instantly. Pages that flip like a real book. Your PDFs, read aloud. This is Flippy.</p>
+      <p class="subtitle">Zoom that actually stays locked. Paste any link to download a PDF instantly. Pages that flip like a real book. Your PDFs, read aloud. All organized by collection. This is Flippy.</p>
       <div class="hero-buttons">
         <a href="https://play.google.com/store/apps/details?id=com.pdfflipbook" class="hero-cta" target="_blank" rel="noopener">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a1.005 1.005 0 01-.61-.92V2.734c0-.382.218-.72.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302L18 12.81l-2.302 2.302-2-2L14.7 12l2.998-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302L5.864 2.658z"/></svg>
@@ -434,7 +491,7 @@
           <source src="assets/hero-curl.mp4" type="video/mp4">
         </video>
       </div>
-      <p class="hero-caption fade-in">Textbooks, court docs, the Epstein files — literally any PDF 📖</p>
+      <p class="hero-caption fade-in">Textbooks, court docs, that 400-page manual you've been avoiding — literally any PDF 📖</p>
     </div>
   </section>
 
@@ -572,6 +629,41 @@
     </div>
   </section>
 
+  <!-- Recently Added -->
+  <section class="recent-section">
+    <div class="container">
+      <h2 class="section-title fade-in">Recently added</h2>
+      <p class="recent-subtitle fade-in">Flippy is actively improving. Here's what's new.</p>
+      <div class="recent-grid">
+        <div class="recent-card fade-in">
+          <div class="recent-icon">📁</div>
+          <h3>Collections</h3>
+          <p>Organize your PDFs into folders. Long-press any book to assign it to a collection.</p>
+        </div>
+        <div class="recent-card fade-in">
+          <div class="recent-icon">🔔</div>
+          <h3>Daily Reading Reminders</h3>
+          <p>Gentle nudges to build a reading habit. Delivered once a day between 9 AM and 9 PM. <span class="platform-tag">Android</span></p>
+        </div>
+        <div class="recent-card fade-in">
+          <div class="recent-icon">📥</div>
+          <h3>Multi-select Import</h3>
+          <p>Select multiple PDFs at once and bring them into Flippy in a single tap.</p>
+        </div>
+        <div class="recent-card fade-in">
+          <div class="recent-icon">📝</div>
+          <h3>Redesigned Notes Panel</h3>
+          <p>Bookmarks and highlights in one cleaner, faster place. Review everything you've marked at a glance.</p>
+        </div>
+        <div class="recent-card fade-in">
+          <div class="recent-icon">👆</div>
+          <h3>Tablet Power Features</h3>
+          <p>Chapter scrubber for quick navigation. Fullscreen AI Q&A. Double-tap to start read-aloud.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Paste Link Demo -->
   <section class="demo-section">
     <div class="container">
@@ -591,7 +683,7 @@
       <h2 class="section-title fade-in">Free on Android and iOS</h2>
       <div class="platform-grid">
         <div class="platform-card fade-in">
-          <div class="platform-icon">📱</div>
+          <div class="platform-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a1.005 1.005 0 01-.61-.92V2.734c0-.382.218-.72.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302L18 12.81l-2.302 2.302-2-2L14.7 12l2.998-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302L5.864 2.658z"/></svg></div>
           <h3>Android</h3>
           <span class="platform-badge badge-live">Available now</span>
           <br>
@@ -602,7 +694,7 @@
           <p style="font-size: 13px; color: var(--text-muted); margin-top: 12px;">Phone + Tablet</p>
         </div>
         <div class="platform-card fade-in">
-          <div class="platform-icon">🍎</div>
+          <div class="platform-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg></div>
           <h3>iOS</h3>
           <span class="platform-badge badge-live">Available now</span>
           <br>
@@ -613,6 +705,9 @@
           <p style="font-size: 13px; color: var(--text-muted); margin-top: 12px;">iPhone + iPad</p>
         </div>
       </div>
+      <p class="fade-in" style="text-align: center; margin-top: 40px; font-size: 14px; color: var(--text-secondary); max-width: 560px; margin-left: auto; margin-right: auto;">
+        Free to download and use. Unlock unlimited AI Q&amp;A and read-aloud with Pro — <strong style="color: var(--text);">$3.99/month</strong> or <strong style="color: var(--text);">$29.99/year</strong>.
+      </p>
     </div>
   </section>
 
