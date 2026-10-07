@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>document.documentElement.classList.add('js')</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Flippy - The PDF &amp; EPUB Reader That Doesn't Suck</title>
@@ -8,13 +9,13 @@
   <meta name="theme-color" content="#02050b">
   <meta property="og:title" content="Flippy - The PDF &amp; EPUB Reader That Doesn't Suck">
   <meta property="og:description" content="Reading PDFs on your phone is awful. Flippy fixes it. Pages that flip like a real book, PDFs and EPUBs read aloud in natural voices, and AI that explains the paragraph that lost you, using the actual text of your document.">
-  <meta property="og:image" content="https://flippypdf.github.io/flippy/assets/v2/flip-ipad-poster.jpg">
+  <meta property="og:image" content="https://flippypdf.github.io/flippy/assets/v3/og.jpg">
   <meta property="og:url" content="https://flippypdf.github.io/flippy/">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Flippy - The PDF &amp; EPUB Reader That Doesn't Suck">
   <meta name="twitter:description" content="Reading PDFs on your phone is awful. Flippy fixes it. Pages that flip like a real book, read aloud in natural voices.">
-  <meta name="twitter:image" content="https://flippypdf.github.io/flippy/assets/v2/flip-ipad-poster.jpg">
+  <meta name="twitter:image" content="https://flippypdf.github.io/flippy/assets/v3/og.jpg">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
@@ -119,12 +120,6 @@
     .island { position: absolute; left: 50%; top: 2.6cqw; width: 29.3cqw; height: 8.6cqw; transform: translateX(-50%); border-radius: 99px; background: #000; z-index: 3; }
     .clock { position: absolute; left: 11.5cqw; top: 4.8cqw; z-index: 3; font: 600 3.95cqw/1 -apple-system, "SF Pro Text", "Helvetica Neue", sans-serif; color: #fff; }
     .home-bar { position: absolute; left: 50%; bottom: 2.1cqw; width: 31cqw; height: 1.25cqw; transform: translateX(-50%); border-radius: 99px; background: rgba(255, 255, 255, 0.85); z-index: 3; }
-    /* Read-aloud: dim the page except the line being read (same treatment as the store screenshot). */
-    .spot {
-      position: absolute; left: 9.6%; top: 39.4%; width: 81.8%; height: 2.9%;
-      border: 2px solid var(--blue); border-radius: 6px; z-index: 2;
-      box-shadow: 0 0 18px 4px rgba(74, 158, 255, 0.55), 0 0 0 9999px rgba(0, 0, 0, 0.5);
-    }
     .tablet {
       --w: min(900px, 100%);
       width: var(--w);
@@ -132,9 +127,14 @@
       border-radius: 36px;
       padding: 16px;
     }
-    .tablet .screen { overflow: hidden; border-radius: 20px; background: #000; aspect-ratio: 1400 / 1100; }
+    .tablet .screen { overflow: hidden; border-radius: 20px; background: #000; aspect-ratio: 4 / 3; }
     .tablet video { display: block; width: 100%; height: 100%; object-fit: cover; }
     .hero .device-stage { margin-top: 52px; }
+    /* Device-matched hero: iPad spread on wide screens, the phone on phones. */
+    .only-narrow { display: none; }
+    /* Gentle motion: things ease in as they scroll into view (only when JS runs, and never with reduced motion). */
+    .js .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+    .js .reveal.in { opacity: 1; transform: none; }
     .hero .caption { margin-top: 26px; font-size: 16px; color: var(--text-3); }
 
     /* Story rows: one feature each, separated by rules, no boxes. */
@@ -191,9 +191,11 @@
       .tablet .screen { border-radius: 12px; }
       .also { padding: 64px 0; }
       .also ul { columns: 1; }
+      .only-wide { display: none; }
+      .only-narrow { display: flex; }
     }
     @media (max-width: 480px) { .hero h1 br { display: none; } }
-    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .store { transition: none; } }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .store { transition: none; } .js .reveal { opacity: 1; transform: none; transition: none; } }
   </style>
 </head>
 <body>
@@ -220,15 +222,21 @@
         </a>
         <a class="store" href="https://flippypdf.com" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
-          flippypdf.com
+          Try it in your browser
         </a>
       </div>
-      <div class="device-stage">
+      <div class="device-stage only-wide">
         <div class="tablet">
           <div class="screen">
-            <video autoplay loop muted playsinline poster="assets/v2/flip-ipad-poster.jpg" aria-label="A two-page spread in Flippy turning like a real book">
-              <source src="assets/v2/flip-ipad.mp4" type="video/mp4">
-            </video>
+            <video loop muted playsinline preload="none" poster="assets/v3/hero-ipad.jpg" data-src="assets/v3/hero-ipad.mp4" aria-label="Alice in Wonderland in Flippy on an iPad: two pages turning, the scrubber flipping through, then a jump to Chapter VII"></video>
+          </div>
+        </div>
+      </div>
+      <div class="device-stage only-narrow">
+        <div class="phone">
+          <div class="screen">
+            <video loop muted playsinline preload="none" poster="assets/v3/hero-phone.jpg" data-src="assets/v3/hero-phone.mp4" aria-label="Alice in Wonderland in Flippy on a phone, pages turning from the cover to the White Rabbit"></video>
+            <div class="island"></div><div class="clock">9:41</div><div class="home-bar"></div>
           </div>
         </div>
       </div>
@@ -238,12 +246,11 @@
 
   <main class="wrap">
 
-    <section class="row">
+    <section class="row reveal">
       <div class="device-stage">
         <div class="phone">
           <div class="screen">
-            <img src="assets/v2/read-aloud.jpg" alt="Flippy reading a page of Alice in Wonderland aloud, with the current line highlighted" loading="lazy">
-            <div class="spot"></div>
+            <video loop muted playsinline preload="none" poster="assets/v3/read-aloud.jpg" data-src="assets/v3/read-aloud.mp4" aria-label="Flippy reading Alice in Wonderland aloud while a dot follows the words"></video>
             <div class="island"></div><div class="clock">9:41</div><div class="home-bar"></div>
           </div>
         </div>
@@ -256,7 +263,7 @@
       </div>
     </section>
 
-    <section class="row flip">
+    <section class="row reveal flip">
       <div class="device-stage">
         <div class="phone">
           <div class="screen">
@@ -272,12 +279,11 @@
       </div>
     </section>
 
-    <section class="row">
+    <section class="row reveal">
       <div class="device-stage">
         <div class="phone">
           <div class="screen">
-            <video autoplay loop muted playsinline preload="metadata" poster="assets/v2/define-poster.jpg" aria-label="Tapping a word in Flippy, reading its definition, and saving it to My Words">
-              <source src="assets/v2/define.mp4" type="video/mp4">
+            <video loop muted playsinline preload="none" poster="assets/v2/define-poster.jpg" data-src="assets/v2/define.mp4" aria-label="Tapping a word in Flippy, reading its definition, and saving it to My Words">
             </video>
             <div class="island"></div><div class="clock">9:41</div><div class="home-bar"></div>
           </div>
@@ -290,7 +296,7 @@
       </div>
     </section>
 
-    <section class="row flip">
+    <section class="row reveal flip">
       <div class="device-stage">
         <div class="phone">
           <div class="screen">
@@ -306,7 +312,7 @@
       </div>
     </section>
 
-    <section class="row">
+    <section class="row reveal">
       <div class="device-stage">
         <div class="phone">
           <div class="screen">
@@ -322,7 +328,19 @@
       </div>
     </section>
 
-    <section class="also">
+    <section class="also reveal">
+      <h2 class="section-h">New in Flippy 4.8</h2>
+      <ul>
+        <li><strong>Share a quote</strong>: select a few words, share them as a card</li>
+        <li><strong>Share a page</strong> as a picture</li>
+        <li><strong>Reading stats</strong>: your streak, pages and books</li>
+        <li><strong>EPUBs look like books</strong>, cover first</li>
+        <li><strong>Pick up where you stopped</strong> on your other device</li>
+        <li><strong>Flippy for Mac</strong>, made for the computer</li>
+      </ul>
+    </section>
+
+    <section class="also reveal">
       <h2 class="section-h">Also in Flippy</h2>
       <ul>
         <li><strong>EPUBs</strong>, with every feature</li>
@@ -330,7 +348,7 @@
         <li><strong>Ask your whole library</strong> and get the page it came from</li>
         <li><strong>Flashcards and quizzes</strong> from what you're reading</li>
         <li><strong>Automatic chapters</strong> when the PDF has none</li>
-        <li><strong>16 app languages</strong>, right-to-left included</li>
+        <li><strong>17 app languages</strong>, right-to-left included</li>
         <li><strong>Highlights, notes</strong> and bookmarks</li>
         <li><strong>Free sync.</strong> Your files are never uploaded</li>
         <li><strong>Read on any computer</strong> at flippypdf.com, with your notes synced</li>
@@ -355,12 +373,16 @@
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
           App Store
         </a>
+        <a class="store" href="https://apps.apple.com/us/app/flippy-page-flip-pdf-reader/id6758871767?platform=mac" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M1 20h22"/></svg>
+          Mac App Store
+        </a>
         <a class="store" href="https://flippypdf.com" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
-          flippypdf.com
+          Read in your browser
         </a>
       </div>
-      <p class="devices">Android phone and tablet · iPhone and iPad · any browser at <a href="https://flippypdf.com" target="_blank" rel="noopener">flippypdf.com</a></p>
+      <p class="devices">Android phone and tablet · iPhone and iPad · Mac · any browser at <a href="https://flippypdf.com" target="_blank" rel="noopener">flippypdf.com</a></p>
       <p class="price">Free to download. Upgrade in the app for more natural-voice minutes and AI. Prices are shown in the store for your country.</p>
     </div>
   </section>
@@ -376,12 +398,30 @@
   </footer>
 
   <script>
-    // Respect "reduce motion": no autoplaying loops; show controls instead.
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      document.querySelectorAll('video').forEach(function (v) {
-        v.removeAttribute('autoplay'); v.pause(); v.controls = true;
-      });
-    }
+    (function () {
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var io = 'IntersectionObserver' in window;
+      // Rows ease in once as they scroll into view.
+      var rv = document.querySelectorAll('.reveal');
+      if (!io) rv.forEach(function (el) { el.classList.add('in'); });
+      else {
+        var ro = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } }); }, { threshold: 0.15 });
+        rv.forEach(function (el) { ro.observe(el); });
+      }
+      // Videos load only when they're near the screen, play only while visible. Reduce motion = poster + controls.
+      var vids = document.querySelectorAll('video[data-src]');
+      function load(v) { if (!v.src) { v.src = v.dataset.src; } }
+      if (reduce) { vids.forEach(function (v) { v.controls = true; v.preload = 'metadata'; load(v); }); return; }
+      if (!io) { vids.forEach(function (v) { load(v); v.play(); }); return; }
+      var vo = new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          var v = e.target;
+          if (e.isIntersecting && v.offsetParent !== null) { load(v); var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+          else if (!v.paused) v.pause();
+        });
+      }, { rootMargin: '200px 0px', threshold: 0.01 });
+      vids.forEach(function (v) { vo.observe(v); });
+    })();
   </script>
 
 </body>
