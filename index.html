@@ -1,416 +1,259 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script>document.documentElement.classList.add('js')</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Flippy - The PDF &amp; EPUB Reader That Doesn't Suck</title>
-  <meta name="description" content="Reading PDFs on your phone is awful. Flippy fixes it. Pages that flip like a real book, PDFs and EPUBs read aloud in natural voices, and AI that explains the paragraph that lost you, using the actual text of your document.">
-  <meta name="theme-color" content="#02050b">
+  <meta name="description" content="Reading PDFs on your phone is awful. Flippy fixes it. Pages that flip like a real book, PDFs and EPUBs read aloud in natural voices, and AI that explains the paragraph that lost you, using the actual text of your document. New in 5.3: a whole new look.">
+  <meta name="theme-color" content="#000000">
   <meta property="og:title" content="Flippy - The PDF &amp; EPUB Reader That Doesn't Suck">
-  <meta property="og:description" content="Reading PDFs on your phone is awful. Flippy fixes it. Pages that flip like a real book, PDFs and EPUBs read aloud in natural voices, and AI that explains the paragraph that lost you, using the actual text of your document.">
-  <meta property="og:image" content="https://flippypdf.github.io/flippy/assets/v3/og.jpg">
+  <meta property="og:description" content="Pages that flip like a real book, read aloud in natural voices, and AI that explains the part that lost you. New in 5.3: a whole new look.">
+  <meta property="og:image" content="https://flippypdf.github.io/flippy/assets/v4/og.jpg">
   <meta property="og:url" content="https://flippypdf.github.io/flippy/">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Flippy - The PDF &amp; EPUB Reader That Doesn't Suck">
   <meta name="twitter:description" content="Reading PDFs on your phone is awful. Flippy fixes it. Pages that flip like a real book, read aloud in natural voices.">
-  <meta name="twitter:image" content="https://flippypdf.github.io/flippy/assets/v3/og.jpg">
+  <meta name="twitter:image" content="https://flippypdf.github.io/flippy/assets/v4/og.jpg">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <style>
+    /* The Flippy look (flippy-monitor/product/DESIGN-LANGUAGE.md): black, white text (never grey),
+       one blue thing per screen, the glow only behind the thing in hand. */
     :root {
-      --bg: #02050b;
-      --navy: #071427;
-      --text: #f4f7fb;
-      --text-2: #ffffff;
-      --text-3: #8795aa;
-      --blue: #4a9eff;
-      --rule: rgba(255, 255, 255, 0.09);
+      --bg: #000;
+      --text: #fff;
+      --blue: #4A9EFF;
+      --rule: rgba(255, 255, 255, .13);
+      --edge: rgba(255, 255, 255, .2);
+      --glow: radial-gradient(ellipse at 50% 40%, rgba(74, 158, 255, .34), transparent 66%);
     }
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    /* clip, not hidden: the glow may spill past the edge without a sideways scroll, and the sticky phone keeps working */
+    html { scroll-behavior: smooth; background: var(--bg); overflow-x: clip; }
     body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
-      font-size: 18px;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
+      background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 18px; line-height: 1.45; -webkit-font-smoothing: antialiased; overflow-x: clip;
     }
     a { color: inherit; text-decoration: none; }
-    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+    b { color: var(--blue); font-weight: 650; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
 
-    /* Nav */
-    nav {
-      position: sticky; top: 0; z-index: 20;
-      background: rgba(2, 5, 11, 0.82);
-      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--rule);
-    }
-    nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
-    .logo { font-size: 21px; font-weight: 700; letter-spacing: -0.02em; }
-    .nav-get { font-size: 15px; font-weight: 600; color: var(--blue); }
-    .nav-get:hover { color: var(--text); }
+    /* Top line */
+    nav { position: sticky; top: 0; z-index: 20; background: rgba(11, 13, 17, .86); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--rule); }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 58px; }
+    .logo { font-size: 21px; font-weight: 700; letter-spacing: -.02em; display: flex; align-items: center; gap: 10px; }
+    .logo img { width: 28px; height: 28px; border-radius: 7px; }
+    .nav-links { display: flex; gap: 22px; font-size: 15px; font-weight: 600; }
+    .nav-links a { color: var(--text); }
+    .nav-links a.get-link { color: var(--blue); }
+    .nav-links a:hover { color: var(--blue); }
+
+    /* Headlines */
+    h1 { font-size: clamp(38px, 6.6vw, 66px); line-height: 1.04; font-weight: 800; letter-spacing: -.035em; }
+    .h2 { font-size: clamp(30px, 4.4vw, 46px); line-height: 1.08; font-weight: 800; letter-spacing: -.03em; }
+    .label { font-size: 13px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--blue); }
+    .sub { font-size: clamp(18px, 2.2vw, 21px); }
+    .chip { display: inline-flex; align-items: center; gap: 8px; padding: 6px 13px; border-radius: 16px; border: 1px solid var(--edge); font-size: 14px; font-weight: 600; }
+    .chip:hover { border-color: var(--blue); }
+    .chip b { font-weight: 800; }
+
+    /* Store buttons: outlined; the one for the visitor's device is the blue one (filled in by the script below). */
+    .stores { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .store { display: inline-flex; align-items: center; gap: 9px; padding: 12px 20px; border-radius: 11px; border: 1px solid var(--edge); background: #14161a; font-size: 15.5px; font-weight: 700; transition: transform .15s ease; }
+    .store:hover { transform: translateY(-1px); border-color: var(--blue); }
+    .store svg { width: 19px; height: 19px; }
+    .store.main { background: var(--blue); border-color: var(--blue); color: #000; box-shadow: 0 0 26px rgba(74, 158, 255, .45); }
+
+    /* Devices */
+    .stage { position: relative; display: flex; justify-content: center; }
+    .stage.glow::before { content: ''; position: absolute; inset: -12% -20%; background: var(--glow); pointer-events: none; }
+    .phone { --w: 290px; position: relative; width: var(--w); padding: calc(var(--w) * .03); border-radius: calc(var(--w) * .15); background: #050506; border: calc(var(--w) * .008) solid #3a3c41; box-shadow: 0 30px 80px rgba(0, 0, 0, .7); }
+    .phone .screen { position: relative; overflow: hidden; background: #000; aspect-ratio: 430 / 932; border-radius: calc(var(--w) * .12); }
+    .phone .screen img, .phone .screen video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+    .island { position: absolute; left: 50%; top: 2.4%; width: 30%; height: 3.6%; transform: translateX(-50%); border-radius: 99px; background: #000; z-index: 2; }
+    .tablet { position: relative; width: min(980px, 100%); padding: 14px; border-radius: 34px; background: #050506; border: 4px solid #3a3c41; box-shadow: 0 40px 100px rgba(0, 0, 0, .7); }
+    .tablet .screen { overflow: hidden; border-radius: 20px; aspect-ratio: 1366 / 1024; background: #000; }
+    .tablet .screen video { display: block; width: 100%; height: 100%; object-fit: cover; }
 
     /* Hero */
-    .hero {
-      text-align: center;
-      padding: 72px 0 40px;
-      background: radial-gradient(ellipse 80% 60% at 50% 78%, #10305e 0%, var(--navy) 45%, var(--bg) 100%);
-    }
-    .hero h1 {
-      font-size: clamp(38px, 7vw, 68px);
-      line-height: 1.05;
-      font-weight: 800;
-      letter-spacing: -0.035em;
-      max-width: 14em;
-      margin: 0 auto;
-    }
-    .hero .sub {
-      font-size: clamp(18px, 2.4vw, 21px);
-      color: var(--text-2);
-      max-width: 32em;
-      margin: 22px auto 0;
-    }
-    .stores { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
-    .store {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 13px 24px; border-radius: 999px;
-      background: var(--text); color: #000;
-      font-size: 16px; font-weight: 650;
-      transition: transform 0.15s ease, background 0.15s ease;
-    }
-    .store:hover { background: #fff; transform: translateY(-1px); }
-    .store svg { width: 20px; height: 20px; }
+    .hero { text-align: center; padding: 60px 0 40px; }
+    .hero .chip { margin-bottom: 22px; }
+    .hero h1 { max-width: 13em; margin: 0 auto; }
+    .hero .sub { max-width: 31em; margin: 20px auto 0; }
+    .hero .stores { margin-top: 28px; }
+    .hero .stage { margin-top: 48px; }
+    .hero .cap { margin-top: 22px; font-size: 15px; }
 
-    /* Devices — same look as the store screenshots: titanium rim, black glass, glow behind. */
-    .device-stage { position: relative; display: flex; justify-content: center; }
-    .device-stage::before {
-      content: ''; position: absolute; left: 50%; top: 50%;
-      width: 90%; height: 70%; transform: translate(-50%, -50%);
-      background: radial-gradient(closest-side, rgba(90, 170, 255, 0.45) 0%, rgba(74, 158, 255, 0.16) 50%, rgba(74, 158, 255, 0) 100%);
-      filter: blur(24px); pointer-events: none;
-    }
-    .phone, .tablet {
-      position: relative;
-      border: solid transparent;
-      background: linear-gradient(#040405, #040405) padding-box,
-                  linear-gradient(135deg, #8d9096 0%, #45474c 20%, #232427 48%, #4d5055 74%, #92959b 100%) border-box;
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.9), 0 40px 100px rgba(0, 0, 0, 0.6), 0 12px 36px rgba(0, 0, 0, 0.45);
-    }
-    .phone {
-      --w: 300px;
-      width: var(--w);
-      border-width: calc(var(--w) * 0.008);
-      border-radius: calc(var(--w) * 0.15);
-      padding: calc(var(--w) * 0.032);
-    }
-    .phone .screen {
-      position: relative; overflow: hidden; background: #000;
-      aspect-ratio: 430 / 932;
-      border-radius: calc(var(--w) * 0.118);
-      container-type: inline-size;
-    }
-    .phone .screen img { display: block; width: 100%; height: 100%; object-fit: cover; }
-    .phone .screen video { position: absolute; left: 0; top: 50%; width: 100%; transform: translateY(-50%); display: block; }
-    .island { position: absolute; left: 50%; top: 2.6cqw; width: 29.3cqw; height: 8.6cqw; transform: translateX(-50%); border-radius: 99px; background: #000; z-index: 3; }
-    .clock { position: absolute; left: 11.5cqw; top: 4.8cqw; z-index: 3; font: 600 3.95cqw/1 -apple-system, "SF Pro Text", "Helvetica Neue", sans-serif; color: #fff; }
-    .home-bar { position: absolute; left: 50%; bottom: 2.1cqw; width: 31cqw; height: 1.25cqw; transform: translateX(-50%); border-radius: 99px; background: rgba(255, 255, 255, 0.85); z-index: 3; }
-    .tablet {
-      --w: min(900px, 100%);
-      width: var(--w);
-      border-width: 5px;
-      border-radius: 36px;
-      padding: 16px;
-    }
-    .tablet .screen { overflow: hidden; border-radius: 20px; background: #000; aspect-ratio: 4 / 3; }
-    .tablet video { display: block; width: 100%; height: 100%; object-fit: cover; }
-    .hero .device-stage { margin-top: 52px; }
-    /* Device-matched hero: iPad spread on wide screens, the phone on phones. */
-    .only-narrow { display: none; }
-    /* Gentle motion: things ease in as they scroll into view (only when JS runs, and never with reduced motion). */
-    .js .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
-    .js .reveal.in { opacity: 1; transform: none; }
-    .hero .caption { margin-top: 26px; font-size: 16px; color: var(--text-3); }
+    /* New in 5.3: two halves. The phone stays put on the left and changes screen as the steps scroll by on the right. */
+    .tour { border-top: 1px solid var(--rule); padding-top: 80px; }
+    .tour .intro { text-align: center; margin-bottom: 20px; }
+    .tour .intro .h2 { margin-top: 10px; }
+    .halves { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+    .sticky { position: sticky; top: 90px; height: min(calc(100vh - 120px), 760px); display: flex; align-items: center; justify-content: center; }
+    .sticky .screen img { position: absolute; inset: 0; opacity: 0; transition: opacity .4s ease; }
+    .sticky .screen img.on { opacity: 1; }
+    .step { min-height: 70vh; display: flex; flex-direction: column; justify-content: center; padding: 30px 0; }
+    .step .n { font-size: 40px; line-height: 1.2; }
+    .step .t { margin-top: 10px; font-size: clamp(28px, 3.6vw, 40px); font-weight: 800; letter-spacing: -.03em; line-height: 1.1; }
+    .step p { margin-top: 14px; font-size: 19px; max-width: 24em; }
+    .step ul { list-style: none; margin-top: 14px; font-size: 17px; }
+    .step li { padding: 8px 0; border-top: 1px solid var(--rule); }
+    .step .inline { display: none; }
 
-    /* Story rows: one feature each, separated by rules, no boxes. */
-    .row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      gap: 64px;
-      padding: 88px 0;
-      border-top: 1px solid var(--rule);
-    }
-    .row .copy { max-width: 30em; }
-    .row.flip .copy { order: 2; }
-    .kicker { font-size: 16px; font-weight: 600; color: var(--blue); margin-bottom: 12px; }
-    .row h2, .section-h {
-      font-size: clamp(32px, 4.6vw, 48px);
-      line-height: 1.08;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-    }
-    .row p { margin-top: 18px; color: var(--text-2); font-size: 19px; }
-    .facts { margin-top: 20px; font-size: 16px; color: var(--text-2); }
-    .facts span { color: var(--text-2); font-weight: 600; }
+    .why { padding: 80px 0; border-top: 1px solid var(--rule); display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+    .why .t { font-size: 22px; font-weight: 800; margin-top: 8px; }
+    .why p { margin-top: 8px; font-size: 16px; }
 
-    /* Everything else: a plain list with rules. */
-    .also { padding: 88px 0; border-top: 1px solid var(--rule); }
-    .also ul { list-style: none; margin-top: 32px; columns: 2; column-gap: 56px; }
-    .also li { break-inside: avoid; padding: 15px 0; border-top: 1px solid var(--rule); font-size: 18px; color: var(--text-2); }
-    .also li strong { color: var(--blue); font-weight: 650; }
+    .get { text-align: center; padding: 80px 0 90px; border-top: 1px solid var(--rule); }
+    .get .stores { margin-top: 26px; }
+    .get .devices { margin-top: 18px; font-size: 15px; }
+    .get .note { margin: 14px auto 0; max-width: 32em; font-size: 15.5px; }
 
-    /* Get it */
-    .get {
-      text-align: center; padding: 96px 0 104px; border-top: 1px solid var(--rule);
-      background: radial-gradient(ellipse 70% 70% at 50% 100%, #0e2a52 0%, var(--navy) 45%, var(--bg) 100%);
-    }
-    .get .devices { margin-top: 14px; font-size: 15px; color: var(--text-3); }
-    .get .devices a { color: var(--blue); }
-    .get .devices a:hover { text-decoration: underline; }
-    .get .price { margin: 30px auto 0; max-width: 30em; font-size: 16px; color: var(--text-2); }
-
-    footer { border-top: 1px solid var(--rule); padding: 28px 0; }
-    footer .wrap { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; }
-    footer .left { font-size: 14px; color: var(--text-3); }
+    footer { border-top: 1px solid var(--rule); padding: 26px 0 34px; font-size: 14px; }
+    footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
     footer .links { display: flex; gap: 22px; }
-    footer .links a { font-size: 14px; color: var(--text-2); }
-    footer .links a:hover { color: var(--text); }
+    footer a:hover { color: var(--blue); }
 
+    .only-narrow { display: none !important; }
     @media (max-width: 820px) {
-      .hero { padding: 48px 0 32px; }
-      .row { grid-template-columns: 1fr; gap: 40px; padding: 64px 0; }
-      .row .copy, .row.flip .copy { order: -1; }
-      .phone { --w: min(280px, 78vw); }
-      .tablet { border-width: 3px; border-radius: 20px; padding: 8px; }
-      .tablet .screen { border-radius: 12px; }
-      .also { padding: 64px 0; }
-      .also ul { columns: 1; }
-      .only-wide { display: none; }
-      .only-narrow { display: flex; }
+      .wrap { padding: 0 16px; }
+      .only-wide { display: none !important; }
+      .only-narrow { display: flex !important; }
+      .nav-links a:not(.get-link) { display: none; }
+      .phone { --w: min(270px, 74vw); }
+      .hero { padding: 40px 0 24px; }
+      .halves { grid-template-columns: 1fr; }
+      .sticky { display: none; }
+      .step { min-height: 0; padding: 40px 0; border-top: 1px solid var(--rule); }
+      .step .inline { display: flex; margin-top: 26px; }
+      .why { grid-template-columns: 1fr; gap: 26px; padding: 60px 0; }
     }
-    @media (max-width: 480px) { .hero h1 br { display: none; } }
-    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .store { transition: none; } .js .reveal { opacity: 1; transform: none; transition: none; } }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .store { transition: none; } .sticky .screen img { transition: none; } }
   </style>
 </head>
 <body>
 
-  <nav>
-    <div class="wrap">
-      <div class="logo">Flippy</div>
-      <a class="nav-get" href="#get">Get the app</a>
-    </div>
-  </nav>
+  <nav><div class="wrap">
+    <a class="logo" href="#"><img src="apple-touch-icon.png" alt="">Flippy</a>
+    <div class="nav-links"><a href="#new">What's new</a><a class="get-link" href="#get">Get the app</a></div>
+  </div></nav>
 
-  <header class="hero">
-    <div class="wrap">
-      <h1>Reading PDFs on your phone <br>is awful. I&nbsp;fixed&nbsp;it.</h1>
-      <p class="sub">Flippy is a PDF and EPUB reader that flips like a real book, reads to you, and explains the parts you don't get.</p>
-      <div class="stores">
-        <a class="store" href="https://play.google.com/store/apps/details?id=com.pdfflipbook" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a1.005 1.005 0 01-.61-.92V2.734c0-.382.218-.72.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302L18 12.81l-2.302 2.302-2-2L14.7 12l2.998-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302L5.864 2.658z"/></svg>
-          Google Play
-        </a>
-        <a class="store" href="https://apps.apple.com/us/app/flippy-page-flip-pdf-reader/id6758871767" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-          App Store
-        </a>
-        <a class="store" href="https://flippypdf.com" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
-          Try it in your browser
-        </a>
-      </div>
-      <div class="device-stage only-wide">
-        <div class="tablet">
-          <div class="screen">
-            <video loop muted playsinline preload="none" poster="assets/v3/hero-ipad.jpg" data-src="assets/v3/hero-ipad.mp4" aria-label="Alice in Wonderland in Flippy on an iPad: turning pages, scrubbing through the book, and jumping to Chapter VI from Contents"></video>
-          </div>
-        </div>
-      </div>
-      <div class="device-stage only-narrow">
-        <div class="phone">
-          <div class="screen">
-            <video loop muted playsinline preload="none" poster="assets/v3/hero-phone.jpg" data-src="assets/v3/hero-phone.mp4" aria-label="Alice in Wonderland in Flippy on a phone, pages turning from the cover to the White Rabbit"></video>
-            <div class="island"></div><div class="clock">9:41</div><div class="home-bar"></div>
-          </div>
-        </div>
-      </div>
-      <p class="caption">Textbooks, court docs, scanned handouts, that 400-page manual you've been avoiding 📖</p>
-    </div>
-  </header>
+  <header class="hero"><div class="wrap">
+    <a class="chip" href="#new"><b>New</b> Flippy 5.3: a whole new look →</a>
+    <h1>Reading PDFs on your phone is awful. I&nbsp;fixed&nbsp;it.</h1>
+    <p class="sub">Flippy is a PDF and EPUB reader that <b>flips</b> like a real book, <b>reads to you</b>, and <b>explains</b> the parts you don't get.</p>
+    <div class="stores" data-stores data-no-mac></div>
+    <div class="stage glow only-wide"><div class="tablet"><div class="screen">
+      <video loop muted playsinline preload="none" poster="assets/v4/flip-ipad.jpg" data-src="assets/v4/flip-ipad.mp4" aria-label="Alice in Wonderland as a two-page spread on an iPad in Flippy, the pages turning like paper"></video>
+    </div></div></div>
+    <div class="stage glow only-narrow"><div class="phone"><div class="screen">
+      <video loop muted playsinline preload="none" poster="assets/v4/flip-phone.jpg" data-src="assets/v4/flip-phone.mp4" aria-label="A page of Alice in Wonderland curling over in Flippy on a phone"></video>
+      <div class="island"></div>
+    </div></div></div>
+    <p class="cap">Textbooks, court docs, scanned handouts, that 400-page manual you've been avoiding 📖</p>
+  </div></header>
 
   <main class="wrap">
-
-    <section class="row reveal">
-      <div class="device-stage">
-        <div class="phone">
-          <div class="screen">
-            <video loop muted playsinline preload="none" poster="assets/v3/read-aloud.jpg" data-src="assets/v3/read-aloud.mp4" aria-label="Flippy reading Alice in Wonderland aloud while a dot follows the words"></video>
-            <div class="island"></div><div class="clock">9:41</div><div class="home-bar"></div>
-          </div>
+    <section class="tour" id="new">
+      <div class="intro"><div class="label">New in Flippy 5.3</div><h2 class="h2">A new look for Flippy</h2></div>
+      <div class="halves">
+        <div class="sticky" aria-hidden="true"><div class="stage glow"><div class="phone" style="--w: 300px"><div class="screen">
+          <img class="on" data-i="0" src="assets/v4/library_phone.jpg" alt="">
+          <img data-i="1" src="assets/v4/reader_phone.jpg" alt="">
+          <img data-i="2" src="assets/v4/voice.jpg" alt="">
+          <img data-i="3" src="assets/v4/chat_phone.jpg" alt="">
+          <img data-i="4" src="assets/v4/study_phone.jpg" alt="">
+          <div class="island"></div>
+        </div></div></div></div>
+        <div>
+          <div class="step" data-i="0"><div class="n">📚</div><h3 class="t">A new library</h3>
+            <p>Your books as <b>covers</b>. The one you are reading sits on top, with <b>Read</b> and <b>Listen</b> one tap away. Press and hold a book for more.</p>
+            <div class="stage inline"><div class="phone"><div class="screen"><img src="assets/v4/library_phone.jpg" alt="The Flippy 5.3 library: the book you are reading on top with Listen and Read, your books as covers below" loading="lazy"><div class="island"></div></div></div></div></div>
+          <div class="step" data-i="1"><div class="n">🎧</div><h3 class="t">Listen, right in the middle</h3>
+            <p>Tap your page to bring up the tools. <b>Listen</b> is in the middle, next to Contents and Ask AI. Every other tool is under More, each with its name.</p>
+            <div class="stage inline"><div class="phone"><div class="screen"><img src="assets/v4/reader_phone.jpg" alt="A page in Flippy 5.3 with the new bar at the bottom: Contents, Ask Aloud, Listen, Ask AI, More" loading="lazy"><div class="island"></div></div></div></div></div>
+          <div class="step" data-i="2"><div class="n">🎙️</div><h3 class="t">Ask Aloud, now in words</h3>
+            <p>Ask about your PDF out loud. The answer is <b>written out</b> in large letters that light up as Flippy says them. Tap <b>Open page</b> to go to the page it used.</p>
+            <div class="stage inline"><div class="phone"><div class="screen"><img src="assets/v4/voice.jpg" alt="Ask Aloud: the question under the orb, the answer written out in large letters" loading="lazy"><div class="island"></div></div></div></div></div>
+          <div class="step" data-i="3"><div class="n">💬</div><h3 class="t">A new AI chat</h3>
+            <p>Start with <b>Summarize</b> or <b>Study</b>, or ask your own question. Each answer has Open page, Listen and Copy. Your <b>conversation stays</b> when you come back.</p>
+            <div class="stage inline"><div class="phone"><div class="screen"><img src="assets/v4/chat_phone.jpg" alt="The new AI chat answering questions about Alice in Wonderland, with the pages it used" loading="lazy"><div class="island"></div></div></div></div></div>
+          <div class="step" data-i="4"><div class="n">🎁</div><h3 class="t">And more</h3>
+            <ul>
+              <li><b>Study</b> has a fresh look, with your score as you go</li>
+              <li><b>Share</b> a PDF from the library on your phone or tablet</li>
+              <li>Look up a word: a cleaner <b>Define</b> sheet</li>
+              <li>New <b>Settings</b> and reading stats</li>
+              <li>A softer <b>page sound</b></li>
+            </ul>
+            <div class="stage inline"><div class="phone"><div class="screen"><img src="assets/v4/study_phone.jpg" alt="The Study page: flashcards and a quiz made from the book, with the score" loading="lazy"><div class="island"></div></div></div></div></div>
         </div>
       </div>
-      <div class="copy">
-        <div class="kicker">Your eyes are done. The reading isn't.</div>
-        <h2>Read aloud, follow along.</h2>
-        <p>A natural voice reads your PDF or EPUB while a dot follows the words. It skips headers and page numbers, so it sounds like a book, not a robot reading a scan.</p>
-        <p class="facts"><span>8 voices</span> · speed from 0.75× to 2×</p>
-      </div>
     </section>
 
-    <section class="row reveal flip">
-      <div class="device-stage">
-        <div class="phone">
-          <div class="screen">
-            <img src="assets/v2/explain.jpg" alt="Flippy explaining a highlighted passage about the Dodo, with a picture" loading="lazy">
-            <div class="island"></div><div class="clock">9:41</div><div class="home-bar"></div>
-          </div>
-        </div>
-      </div>
-      <div class="copy">
-        <div class="kicker">One paragraph loses you.</div>
-        <h2>Explain anything.</h2>
-        <p>Highlight the part that lost you and tap Explain. The answer uses the actual text of your document, not a chatbot's guess. It can see the picture on the page too.</p>
-      </div>
+    <section class="why">
+      <div><div class="label">Listen</div><h3 class="t">Read aloud, offline too</h3><p>A natural voice reads while a dot follows the words, from <b>0.75× to 2×</b>. Download chapters and listen with <b>no signal</b>.</p></div>
+      <div><div class="label">Understand</div><h3 class="t">Explain anything</h3><p>Highlight what lost you. The answer uses the <b>actual text</b> of your document, not a chatbot's guess.</p></div>
+      <div><div class="label">Everything else</div><h3 class="t">Built for real reading</h3><p>Night Pages, scanned PDFs, automatic chapters, flashcards and quizzes, free sync (your files are <b>never uploaded</b>), 18 app languages.</p></div>
     </section>
-
-    <section class="row reveal">
-      <div class="device-stage">
-        <div class="phone">
-          <div class="screen">
-            <video loop muted playsinline preload="none" poster="assets/v2/define-poster.jpg" data-src="assets/v2/define.mp4" aria-label="Tapping a word in Flippy, reading its definition, and saving it to My Words">
-            </video>
-            <div class="island"></div><div class="clock">9:41</div><div class="home-bar"></div>
-          </div>
-        </div>
-      </div>
-      <div class="copy">
-        <div class="kicker">Stuck on a word?</div>
-        <h2>Tap a word. Keep it.</h2>
-        <p>Get the definition in any language and hear it said out loud. Save it to My Words, along with the book it came from.</p>
-      </div>
-    </section>
-
-    <section class="row reveal flip">
-      <div class="device-stage">
-        <div class="phone">
-          <div class="screen">
-            <img src="assets/v2/ask-aloud.jpg" alt="Flippy answering a spoken question about the book" loading="lazy">
-            <div class="island"></div><div class="clock">9:41</div><div class="home-bar"></div>
-          </div>
-        </div>
-      </div>
-      <div class="copy">
-        <div class="kicker">Hands full?</div>
-        <h2>Just ask out loud.</h2>
-        <p>Tap once and ask about your book. Flippy answers out loud, from the book you're reading.</p>
-      </div>
-    </section>
-
-    <section class="row reveal">
-      <div class="device-stage">
-        <div class="phone">
-          <div class="screen">
-            <img src="assets/v2/offline.jpg" alt="The Flippy contents list with chapters downloaded for offline listening" loading="lazy">
-            <div class="island"></div><div class="clock">9:41</div><div class="home-bar"></div>
-          </div>
-        </div>
-      </div>
-      <div class="copy">
-        <div class="kicker">Long commute, no signal.</div>
-        <h2>Listen offline.</h2>
-        <p>Download any chapter, or any range of pages, as audio. It plays with no signal, like a podcast.</p>
-      </div>
-    </section>
-
-    <section class="also reveal">
-      <h2 class="section-h">New in Flippy 4.8</h2>
-      <ul>
-        <li><strong>Share a quote</strong>: select a few words, share them as a card</li>
-        <li><strong>Share a page</strong> as a picture</li>
-        <li><strong>Reading stats</strong>: your streak, pages and books</li>
-        <li><strong>EPUBs look like books</strong>, cover first</li>
-        <li><strong>Pick up where you stopped</strong> on your other device</li>
-        <li><strong>Flippy for Mac</strong>, made for the computer</li>
-      </ul>
-    </section>
-
-    <section class="also reveal">
-      <h2 class="section-h">Also in Flippy</h2>
-      <ul>
-        <li><strong>EPUBs</strong>, with every feature</li>
-        <li><strong>Scanned PDFs</strong>, recognized on your phone</li>
-        <li><strong>Ask your whole library</strong> and get the page it came from</li>
-        <li><strong>Flashcards and quizzes</strong> from what you're reading</li>
-        <li><strong>Automatic chapters</strong> when the PDF has none</li>
-        <li><strong>17 app languages</strong>, right-to-left included</li>
-        <li><strong>Highlights, notes</strong> and bookmarks</li>
-        <li><strong>Free sync.</strong> Your files are never uploaded</li>
-        <li><strong>Read on any computer</strong> at flippypdf.com, with your notes synced</li>
-        <li><strong>Add a PDF</strong> from any link</li>
-        <li><strong>Two-page spreads</strong> on tablets</li>
-        <li><strong>Zoom that stays locked</strong> while you flip</li>
-        <li><strong>Scroll mode</strong> when you'd rather scroll</li>
-      </ul>
-    </section>
-
   </main>
 
-  <section class="get" id="get">
-    <div class="wrap">
-      <h2 class="section-h">Get Flippy</h2>
-      <div class="stores">
-        <a class="store" href="https://play.google.com/store/apps/details?id=com.pdfflipbook" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a1.005 1.005 0 01-.61-.92V2.734c0-.382.218-.72.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302L18 12.81l-2.302 2.302-2-2L14.7 12l2.998-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302L5.864 2.658z"/></svg>
-          Google Play
-        </a>
-        <a class="store" href="https://apps.apple.com/us/app/flippy-page-flip-pdf-reader/id6758871767" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-          App Store
-        </a>
-        <a class="store" href="https://apps.apple.com/us/app/flippy-page-flip-pdf-reader/id6758871767?platform=mac" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M1 20h22"/></svg>
-          Mac App Store
-        </a>
-        <a class="store" href="https://flippypdf.com" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
-          Read in your browser
-        </a>
-      </div>
-      <p class="devices">Android phone and tablet · iPhone and iPad · Mac · any browser at <a href="https://flippypdf.com" target="_blank" rel="noopener">flippypdf.com</a></p>
-      <p class="price">Free to download. Upgrade in the app for more natural-voice minutes and AI. Prices are shown in the store for your country.</p>
-    </div>
-  </section>
+  <section class="get" id="get"><div class="wrap">
+    <h2 class="h2">Get Flippy</h2>
+    <div class="stores" data-stores></div>
+    <p class="devices">Android phone and tablet · iPhone and iPad · Mac · any browser at <b><a href="https://flippypdf.com" target="_blank" rel="noopener">flippypdf.com</a></b></p>
+    <p class="note">Free to download, with a little <b>natural-voice listening</b> and <b>AI</b> every day. Upgrade in the app for more. Prices are shown in the store for your country.</p>
+  </div></section>
 
-  <footer>
-    <div class="wrap">
-      <div class="left">&copy; 2026 Flippy. Made by <a href="https://x.com/vibe_overflow" target="_blank" rel="noopener">@vibe_overflow</a>.</div>
-      <div class="links">
-        <a href="https://flippypdf.github.io/privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a>
-        <a href="mailto:flippypdf@gmail.com">Contact</a>
-      </div>
-    </div>
-  </footer>
+  <footer><div class="wrap">
+    <div>&copy; 2026 Flippy. Made by <b><a href="https://x.com/vibe_overflow" target="_blank" rel="noopener">@vibe_overflow</a></b>.</div>
+    <div class="links"><a href="https://flippypdf.github.io/privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a><a href="mailto:flippypdf@gmail.com">Contact</a></div>
+  </div></footer>
 
   <script>
     (function () {
+      // Store buttons. The one for the visitor's device is the blue one.
+      var I = {
+        play: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.6 1.8 13.8 12 3.6 22.2a1 1 0 0 1-.6-.9V2.7c0-.4.2-.7.6-.9zm10.9 10.9 2.3 2.3-10.9 6.3 8.6-8.6zm3.2-3.2 2.3 2.3c.6.4.6 1.3 0 1.7l-2.3 1.3-2.5-2.5 2.5-2.8zM5.9 2.7l10.9 6.3-2.3 2.3-8.6-8.6z"/></svg>',
+        apple: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.7 19.5c-.8 1.2-1.7 2.4-3 2.5-1.3 0-1.8-.8-3.3-.8-1.5 0-2 .8-3.3.8-1.3.1-2.3-1.3-3.1-2.5C4.3 17 2.9 12.5 4.7 9.4c.9-1.5 2.4-2.5 4.1-2.5 1.3 0 2.5.9 3.3.9.8 0 2.2-1.1 3.8-.9.7 0 2.5.3 3.6 2-.1.1-2.2 1.3-2.1 3.8 0 3 2.6 4 2.7 4-.1.1-.4 1.4-1.4 2.8M13 3.5c.7-.8 1.9-1.5 2.9-1.5.1 1.2-.3 2.4-1 3.2-.7.8-1.8 1.5-2.9 1.4-.2-1.1.4-2.3 1-3.1z"/></svg>',
+        mac: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M1 20h22"/></svg>',
+        web: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>'
+      };
+      var S = [
+        { k: 'play', t: 'Google Play', h: 'https://play.google.com/store/apps/details?id=com.pdfflipbook' },
+        { k: 'apple', t: 'App Store', h: 'https://apps.apple.com/us/app/flippy-page-flip-pdf-reader/id6758871767' },
+        { k: 'mac', t: 'Mac App Store', h: 'https://apps.apple.com/us/app/flippy-page-flip-pdf-reader/id6758871767?platform=mac' },
+        { k: 'web', t: 'Read in your browser', h: 'https://flippypdf.com' }
+      ];
+      var ua = navigator.userAgent || '';
+      var touchMac = /Macintosh/.test(ua) && navigator.maxTouchPoints > 1;   // iPadOS says it is a Mac
+      var mine = /Android/i.test(ua) ? 'play' : (/iPhone|iPad|iPod/.test(ua) || touchMac) ? 'apple' : /Macintosh/.test(ua) ? 'mac' : /Windows|Linux|CrOS/.test(ua) ? 'web' : 'play';
+      document.querySelectorAll('[data-stores]').forEach(function (box) {
+        var skipMac = box.hasAttribute('data-no-mac') && mine !== 'mac';   // the top row shows the Mac store only to Mac visitors
+        box.innerHTML = S.filter(function (s) { return !(skipMac && s.k === 'mac'); }).map(function (s) {
+          return '<a class="store' + (s.k === mine ? ' main' : '') + '" href="' + s.h + '" target="_blank" rel="noopener">' + I[s.k] + s.t + '</a>';
+        }).join('');
+      });
+
       var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var io = 'IntersectionObserver' in window;
-      // Rows ease in once as they scroll into view.
-      var rv = document.querySelectorAll('.reveal');
-      if (!io) rv.forEach(function (el) { el.classList.add('in'); });
-      else {
-        var ro = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } }); }, { threshold: 0.15 });
-        rv.forEach(function (el) { ro.observe(el); });
+
+      // The phone on the left shows the screen of the step in the middle of the window.
+      if (io) {
+        var imgs = document.querySelectorAll('.sticky img');
+        var so = new IntersectionObserver(function (es) {
+          es.forEach(function (e) { if (e.isIntersecting) imgs.forEach(function (im) { im.classList.toggle('on', im.dataset.i === e.target.dataset.i); }); });
+        }, { rootMargin: '-45% 0px -45% 0px' });
+        document.querySelectorAll('.step').forEach(function (s) { so.observe(s); });
       }
-      // Videos load only when they're near the screen, play only while visible. Reduce motion = poster + controls.
+
+      // The flip videos load only when near the screen and play only while visible. Reduce motion = poster + controls.
       var vids = document.querySelectorAll('video[data-src]');
-      function load(v) { if (!v.src) { v.src = v.dataset.src; } }
+      function load(v) { if (!v.src) v.src = v.dataset.src; }
       if (reduce) { vids.forEach(function (v) { v.controls = true; v.preload = 'metadata'; load(v); }); return; }
       if (!io) { vids.forEach(function (v) { load(v); v.play(); }); return; }
       var vo = new IntersectionObserver(function (es) {
