@@ -92,6 +92,7 @@
     .tour { border-top: 1px solid var(--rule); padding-top: 80px; }
     .tour .intro { text-align: center; margin-bottom: 20px; }
     .tour .intro .h2 { margin-top: 10px; }
+    .tour .intro .avail { margin-top: 10px; font-size: 15px; }   /* 5.3: remove once iOS and Mac 5.3 are live */
     .halves { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
     .sticky { position: sticky; top: 90px; height: min(calc(100vh - 120px), 760px); display: flex; align-items: center; justify-content: center; }
     .sticky .screen img { position: absolute; inset: 0; opacity: 0; transition: opacity .4s ease; }
@@ -159,7 +160,7 @@
 
   <main class="wrap">
     <section class="tour" id="new">
-      <div class="intro"><div class="label">New in Flippy 5.3</div><h2 class="h2">A new look for Flippy</h2></div>
+      <div class="intro"><div class="label">New in Flippy 5.3</div><h2 class="h2">A new look for Flippy</h2><p class="avail">On <b>Android</b> and the <b>web</b> now. iPhone, iPad and Mac soon.</p></div>
       <div class="halves">
         <div class="sticky" aria-hidden="true"><div class="stage glow"><div class="phone" style="--w: 300px"><div class="screen">
           <img class="on" data-i="0" src="assets/v4/library_phone.jpg" alt="">
