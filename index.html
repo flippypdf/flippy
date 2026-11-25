@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Flippy - The PDF &amp; EPUB Reader That Doesn't Suck</title>
-  <meta name="description" content="Reading PDFs on your phone is awful. Flippy fixes it. Pages that flip like a real book, PDFs and EPUBs read aloud in natural voices, and AI that explains the paragraph that lost you, using the actual text of your document. New in 5.3: a whole new look.">
+  <meta name="description" content="Reading PDFs on your phone is awful. Flippy fixes it. Pages that flip like a real book, PDFs and EPUBs read aloud in natural voices, and AI that explains the paragraph that lost you, using the actual text of your document. New in 5.4: Notes, bookmarks and a new player.">
   <meta name="theme-color" content="#000000">
   <meta property="og:title" content="Flippy - The PDF &amp; EPUB Reader That Doesn't Suck">
-  <meta property="og:description" content="Pages that flip like a real book, read aloud in natural voices, and AI that explains the part that lost you. New in 5.3: a whole new look.">
+  <meta property="og:description" content="Pages that flip like a real book, read aloud in natural voices, and AI that explains the part that lost you. New in 5.4: Notes, bookmarks and a new player.">
   <meta property="og:image" content="https://flippypdf.github.io/flippy/assets/v4/og.jpg">
   <meta property="og:url" content="https://flippypdf.github.io/flippy/">
   <meta property="og:type" content="website">
@@ -92,7 +92,7 @@
     .tour { border-top: 1px solid var(--rule); padding-top: 80px; }
     .tour .intro { text-align: center; margin-bottom: 20px; }
     .tour .intro .h2 { margin-top: 10px; }
-    .tour .intro .avail { margin-top: 10px; font-size: 15px; }   /* 5.3: remove once iOS and Mac 5.3 are live */
+    .tour .intro .avail { margin-top: 10px; font-size: 15px; }   /* 5.4: remove once iOS and Mac 5.4 are live */
     .halves { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
     .sticky { position: sticky; top: 90px; height: min(calc(100vh - 120px), 760px); display: flex; align-items: center; justify-content: center; }
     .sticky .screen img { position: absolute; inset: 0; opacity: 0; transition: opacity .4s ease; }
@@ -149,7 +149,7 @@
   </div></nav>
 
   <header class="hero"><div class="wrap">
-    <a class="chip" href="#new"><b>New</b> Flippy 5.3: a whole new look →</a>
+    <a class="chip" href="#new"><b>New</b> Flippy 5.4: Notes, bookmarks and a new player →</a>
     <h1>Reading PDFs on your phone is awful. I&nbsp;fixed&nbsp;it.</h1>
     <p class="sub">Flippy is a PDF and EPUB reader that <b>flips</b> like a real book, <b>reads to you</b>, and <b>explains</b> the parts you don't get.</p>
     <div class="stores" data-stores data-no-mac></div>
@@ -165,38 +165,38 @@
 
   <main class="wrap">
     <section class="tour" id="new">
-      <div class="intro"><div class="label">New in Flippy 5.3</div><h2 class="h2">A new look for Flippy</h2><p class="avail">On <b>Android</b> and the <b>web</b> now. iPhone, iPad and Mac soon.</p></div>
+      <div class="intro"><div class="label">New in Flippy 5.4</div><h2 class="h2">Notes, bookmarks and a new player</h2><p class="avail">Live on <b>Android</b> and the <b>web</b>. iPhone, iPad and Mac are in Apple's review.</p></div>
       <div class="halves">
         <div class="sticky" aria-hidden="true"><div class="stage glow"><div class="phone" style="--w: 300px"><div class="screen">
-          <img class="on" data-i="0" src="assets/v4/library_phone.jpg" alt="">
-          <img data-i="1" src="assets/v4/reader_phone.jpg" alt="">
-          <img data-i="2" src="assets/v4/voice.jpg" alt="">
-          <img data-i="3" src="assets/v4/chat_phone.jpg" alt="">
-          <img data-i="4" src="assets/v4/study_phone.jpg" alt="">
+          <img class="on" data-i="0" src="assets/v5/notes_phone.jpg" alt="">
+          <img data-i="1" src="assets/v5/player_phone.jpg" alt="">
+          <img data-i="2" src="assets/v4/chat_phone.jpg" alt="">
+          <img data-i="3" src="assets/v4/study_phone.jpg" alt="">
+          <img data-i="4" src="assets/v4/library_phone.jpg" alt="">
           <div class="island"></div>
         </div></div></div></div>
         <div>
-          <div class="step" data-i="0"><div class="n">📚</div><h3 class="t">A new library</h3>
-            <p>Your books as <b>covers</b>. The one you are reading sits on top, with <b>Read</b> and <b>Listen</b> one tap away. Press and hold a book for more.</p>
-            <div class="stage inline"><div class="phone"><div class="screen"><img src="assets/v4/library_phone.jpg" alt="The Flippy 5.3 library: the book you are reading on top with Listen and Read, your books as covers below" loading="lazy"><div class="island"></div></div></div></div></div>
-          <div class="step" data-i="1"><div class="n">🎧</div><h3 class="t">Listen, right in the middle</h3>
-            <p>Tap your page to bring up the tools. <b>Listen</b> is in the middle, next to Contents and Ask AI. Every other tool is under More, each with its name.</p>
-            <div class="stage inline"><div class="phone"><div class="screen"><img src="assets/v4/reader_phone.jpg" alt="A page in Flippy 5.3 with the new bar at the bottom: Contents, Ask Aloud, Listen, Ask AI, More" loading="lazy"><div class="island"></div></div></div></div></div>
-          <div class="step" data-i="2"><div class="n">🎙️</div><h3 class="t">Ask Aloud, now in words</h3>
-            <p>Ask about your PDF out loud. The answer is <b>written out</b> in large letters that light up as Flippy says them. Tap <b>Open page</b> to go to the page it used.</p>
-            <div class="stage inline"><div class="phone"><div class="screen"><img src="assets/v4/voice.jpg" alt="Ask Aloud: the question under the orb, the answer written out in large letters" loading="lazy"><div class="island"></div></div></div></div></div>
-          <div class="step" data-i="3"><div class="n">💬</div><h3 class="t">A new AI chat</h3>
-            <p>Start with <b>Summarize</b> or <b>Study</b>, or ask your own question. Each answer has Open page, Listen and Copy. Your <b>conversation stays</b> when you come back.</p>
-            <div class="stage inline"><div class="phone"><div class="screen"><img src="assets/v4/chat_phone.jpg" alt="The new AI chat answering questions about Alice in Wonderland, with the pages it used" loading="lazy"><div class="island"></div></div></div></div></div>
+          <div class="step" data-i="0"><div class="n">📋</div><h3 class="t">Notes, all in one place</h3>
+            <p>Your highlights, bookmarks and AI explanations on <b>one page</b>, with your book's cover. <b>Make study notes</b> from what you highlighted, <b>Listen to your highlights</b>, and send it all anywhere as clean text.</p>
+            <div class="stage inline"><div class="phone"><div class="screen"><img src="assets/v5/notes_phone.jpg" alt="The Notes page for Alice in Wonderland: Make study notes, Listen to highlights, and every highlight and bookmark by page" loading="lazy"><div class="island"></div></div></div></div></div>
+          <div class="step" data-i="1"><div class="n">▶️</div><h3 class="t">A new player</h3>
+            <p>One slim row with a big <b>Play</b> in the middle and an easy progress bar with a blue dot to drag. It fades away while you read; tap the page to bring it back. On iPad, Mac and the web it becomes <b>one bar</b> while you listen.</p>
+            <div class="stage inline"><div class="phone"><div class="screen"><img src="assets/v5/player_phone.jpg" alt="Flippy reading a page aloud, the line being read lit up, with the slim player at the bottom" loading="lazy"><div class="island"></div></div></div></div></div>
+          <div class="step" data-i="2"><div class="n">✨</div><h3 class="t">Ask Flippy looks through the whole book</h3>
+            <p>Ask about anything in a long book and Flippy looks through <b>all of it</b> for the answer. <b>Study</b> and <b>Summarize</b> sit just above the box.</p>
+            <div class="stage inline"><div class="phone"><div class="screen"><img src="assets/v4/chat_phone.jpg" alt="The AI chat answering questions about Alice in Wonderland, with the pages it used" loading="lazy"><div class="island"></div></div></div></div></div>
+          <div class="step" data-i="3"><div class="n">🎓</div><h3 class="t">Quizzes in three levels</h3>
+            <p><b>Warm-up</b>, <b>Standard</b> or <b>Challenge</b>. Study sets save to your Notes by themselves, and <b>New set</b> makes fresh cards and a fresh quiz.</p>
+            <div class="stage inline"><div class="phone"><div class="screen"><img src="assets/v4/study_phone.jpg" alt="The Study page: flashcards and a quiz made from the book, with the score" loading="lazy"><div class="island"></div></div></div></div></div>
           <div class="step" data-i="4"><div class="n">🎁</div><h3 class="t">And more</h3>
             <ul>
-              <li><b>Study</b> has a fresh look, with your score as you go</li>
-              <li><b>Share</b> a PDF from the library on your phone or tablet</li>
-              <li>Look up a word: a cleaner <b>Define</b> sheet</li>
-              <li>New <b>Settings</b> and reading stats</li>
-              <li>A softer <b>page sound</b></li>
+              <li><b>Bookmarks</b> with one tap: tap a page's top corner for a blue ribbon</li>
+              <li><b>Every voice</b> in one place, in tabs you swipe</li>
+              <li><b>Tell the Flippy team</b>, right from Settings</li>
+              <li>A new look for <b>Search</b>, and scanned books read better</li>
+              <li>Plus the 5.3 library, with your books as covers</li>
             </ul>
-            <div class="stage inline"><div class="phone"><div class="screen"><img src="assets/v4/study_phone.jpg" alt="The Study page: flashcards and a quiz made from the book, with the score" loading="lazy"><div class="island"></div></div></div></div></div>
+            <div class="stage inline"><div class="phone"><div class="screen"><img src="assets/v4/library_phone.jpg" alt="The Flippy library: the book you are reading on top with Listen and Read, your books as covers below" loading="lazy"><div class="island"></div></div></div></div></div>
         </div>
       </div>
     </section>
